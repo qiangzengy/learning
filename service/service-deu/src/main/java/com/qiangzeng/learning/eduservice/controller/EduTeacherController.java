@@ -8,6 +8,7 @@ import com.qiangzeng.learning.common.util.ResponseResult;
 import com.qiangzeng.learning.eduservice.entity.EduTeacher;
 import com.qiangzeng.learning.eduservice.entity.vo.TeacherQuery;
 import com.qiangzeng.learning.eduservice.service.EduTeacherService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +26,14 @@ public class EduTeacherController {
     @Autowired
     private EduTeacherService teacherService;
 
-    //查询所有
+    @ApiOperation(value = "查询所有")
     @RequestMapping(value = "findAll",method = RequestMethod.GET)
     public ResponseResult findAll(){
         List<EduTeacher> list=teacherService.list(null);
         return ResponseResult.success(list);
     }
 
-    //分页查询
+    @ApiOperation(value = "分页查询")
     @RequestMapping(value = "pageData/{curret}/{size}",method = RequestMethod.GET)
     public ResponseResult pageData(@PathVariable long curret,@PathVariable long size){
         Page<EduTeacher>page=new Page<>(curret,size);
@@ -40,7 +41,7 @@ public class EduTeacherController {
         return ResponseResult.success(teacherService.page(page,null));
     }
 
-    //根据Id删除
+    @ApiOperation(value = "根据Id删除")
     @RequestMapping(value = "removeById/{id}",method = RequestMethod.DELETE)
     public ResponseResult removeById(@PathVariable String id){
         //TODO 感觉有问题，随便传id返回也是true
@@ -52,7 +53,8 @@ public class EduTeacherController {
        return ResponseResult.success();
     }
 
-    //增加或修改
+
+    @ApiOperation(value = "增加或修改")
     @RequestMapping(value = "saveOrUpdate",method =RequestMethod.POST)
     public ResponseResult saveOrUpdate(@RequestBody EduTeacher eduTeacher){
         try{
@@ -64,7 +66,7 @@ public class EduTeacherController {
 
     }
 
-    //分页条件查询
+    @ApiOperation(value = "分页条件查询")
     @RequestMapping(value = "pageCondition/{curret}/{size}",method = RequestMethod.POST)
     public ResponseResult pageCondition(@PathVariable long curret, @PathVariable long size, @RequestBody(required = false) TeacherQuery teacherQuery){
 
@@ -90,10 +92,9 @@ public class EduTeacherController {
         }
         IPage<EduTeacher> pages=teacherService.page(page,queryWrapper);
         return ResponseResult.success(pages);
-
     }
 
-    //根据讲师id进行查询
+    @ApiOperation(value = "根据讲师id进行查询")
     @RequestMapping(value = "getById/{id}",method = RequestMethod.GET)
     public ResponseResult getById(@PathVariable String id){
         EduTeacher teacher = teacherService.getById(id);
