@@ -46,4 +46,22 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescriptionService.save(eduCourseDescription);
 
     }
+
+
+    @Override
+    public void updateCourse(CourseInfo courseInfo) {
+        EduCourse eduCourse=new EduCourse();
+        BeanUtils.copyProperties(courseInfo,eduCourse);
+        int now=baseMapper.updateById(eduCourse);
+        if(now==0){
+            throw  new MyException(20001,"修改失败");
+        }
+        String cid=eduCourse.getId();
+        EduCourseDescription eduCourseDescription=new EduCourseDescription();
+        eduCourseDescription.setId(cid);
+        eduCourseDescription.setDescription(courseInfo.getDescription());
+        eduCourseDescriptionService.updateById(eduCourseDescription);
+
+    }
+
 }

@@ -15,5 +15,6 @@ import com.qiangzeng.learning.eduservice.entity.vo.CourseInfo;
 public interface EduCourseService extends IService<EduCourse> {
 
     void createCourse(CourseInfo courseInfo);
+    void updateCourse(CourseInfo courseInfo);
 
 }
