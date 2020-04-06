@@ -1,7 +1,10 @@
 package com.qiangzeng.learning.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qiangzeng.learning.common.util.ResponseResult;
+import com.qiangzeng.learning.eduservice.entity.EduCourse;
 import com.qiangzeng.learning.eduservice.entity.EduCourseDescription;
 import com.qiangzeng.learning.eduservice.entity.vo.CourseInfo;
 import com.qiangzeng.learning.eduservice.service.EduCourseDescriptionService;
@@ -56,6 +59,18 @@ public class EduCourseController {
         return ResponseResult.success();
 
     }
+
+
+    @ApiModelProperty(value = "获取课程信息")
+    @RequestMapping(value = "findAllCourse/{c}/{size}",method = RequestMethod.DELETE)
+    public ResponseResult findAllCourse(@PathVariable long c,@PathVariable long size){
+        Page<EduCourse> page=new Page<>(c,size);
+        IPage<EduCourse> iPage=eduCourseService.page(page,null);
+        return ResponseResult.success(iPage);
+
+    }
+
+
 
 }
 
