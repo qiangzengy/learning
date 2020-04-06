@@ -3,7 +3,6 @@ package com.qiangzeng.learning.eduservice.utils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
-import com.qiangzeng.learning.common.util.ResponseResult;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +22,7 @@ import java.util.UUID;
 @Component
 public class OssUtils implements InitializingBean {
 
-    @Value("${END_POIND}")
+    @Value("${END_POINT}")
     private String endpoint;
 
     @Value("${ACCESS_KEY_ID}")
@@ -38,14 +37,14 @@ public class OssUtils implements InitializingBean {
     private OSS  ossClient;
 
     //定义公开静态常量
-    private static String END_POIND;
+    private static String END_POINT;
     private static String ACCESS_KEY_ID;
     private static String ACCESS_KEY_SECRET;
     private static String BUCKET_NAME;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        END_POIND = endpoint;
+        END_POINT = endpoint;
         ACCESS_KEY_ID = accessKeyId;
         ACCESS_KEY_SECRET = accessKeySecret;
         BUCKET_NAME = bucketName;
@@ -56,7 +55,7 @@ public class OssUtils implements InitializingBean {
 
         try {
             // 创建OSS实例。
-            ossClient = new OSSClientBuilder().build(END_POIND, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+            ossClient = new OSSClientBuilder().build(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
             //获取上传文件输入流
             InputStream inputStream = file.getInputStream();
             //获取文件名称
