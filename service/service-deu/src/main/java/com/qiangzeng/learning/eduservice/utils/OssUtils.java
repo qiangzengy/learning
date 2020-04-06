@@ -38,10 +38,10 @@ public class OssUtils implements InitializingBean {
     private OSS  ossClient;
 
     //定义公开静态常量
-    public static String END_POIND;
-    public static String ACCESS_KEY_ID;
-    public static String ACCESS_KEY_SECRET;
-    public static String BUCKET_NAME;
+    private static String END_POIND;
+    private static String ACCESS_KEY_ID;
+    private static String ACCESS_KEY_SECRET;
+    private static String BUCKET_NAME;
 
     @Override
     public void afterPropertiesSet() throws Exception {
