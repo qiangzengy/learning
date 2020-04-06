@@ -21,3 +21,8 @@ spring:
 mybatis-plus:
   configuration:
    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#OSS
+END_POIND: oss-cn-beijing.aliyuncs.com
+ACCESS_KEY_ID: ##########
+ACCESS_KEY_SECRET: #########
+BUCKET_NAME: qiangzeng
