@@ -25,7 +25,7 @@ public class EduTeacher implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "讲师ID")
-    @TableId(value = "id", type = IdType.ID_WORKER_STR)//mp自带策略，生成19位值，数字类型使用这种策略
+    @TableId(value = "id", type = IdType.ID_WORKER_STR)//mp自带策略，生成19位值，字符串类型使用这种策略
     private String id;
 
     @ApiModelProperty(value = "讲师姓名")
