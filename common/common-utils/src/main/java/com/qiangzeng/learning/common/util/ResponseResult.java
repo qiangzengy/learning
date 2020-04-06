@@ -23,6 +23,7 @@ public class ResponseResult {
     public ResponseResult(Object data) {
         this.success = true;
         this.code=ResultCode.SUCCESS.getCode();
+        this.message=ResultCode.SUCCESS.getMessage();
         this.data = data;
     }
 
