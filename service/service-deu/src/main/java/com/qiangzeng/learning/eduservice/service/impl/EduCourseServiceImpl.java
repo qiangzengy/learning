@@ -3,11 +3,16 @@ package com.qiangzeng.learning.eduservice.service.impl;
 import com.qiangzeng.learning.base.exceptionhandler.MyException;
 import com.qiangzeng.learning.eduservice.entity.EduCourse;
 import com.qiangzeng.learning.eduservice.entity.EduCourseDescription;
+import com.qiangzeng.learning.eduservice.entity.EduVideo;
+import com.qiangzeng.learning.eduservice.entity.frontvo.CourseWeb;
 import com.qiangzeng.learning.eduservice.entity.vo.CourseInfo;
+import com.qiangzeng.learning.eduservice.entity.vo.CoursePublish;
 import com.qiangzeng.learning.eduservice.mapper.EduCourseMapper;
+import com.qiangzeng.learning.eduservice.service.EduChapterService;
 import com.qiangzeng.learning.eduservice.service.EduCourseDescriptionService;
 import com.qiangzeng.learning.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qiangzeng.learning.eduservice.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +31,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+
+    @Autowired
+    private EduVideoService eduVideoService;
+
+    @Autowired
+    private EduChapterService eduChapterService;
 
     @Override
     public void createCourse(CourseInfo courseInfo) {
@@ -64,4 +75,46 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     }
 
+
+    @Override
+    public CourseInfo getCourseInfo(String courseId) {
+        //1 查询课程表
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        CourseInfo courseInfo = new CourseInfo();
+        BeanUtils.copyProperties(eduCourse,courseInfo);
+
+        //2 查询描述表
+        EduCourseDescription courseDescription = eduCourseDescriptionService.getById(courseId);
+        courseInfo.setDescription(courseDescription.getDescription());
+
+        return courseInfo;    }
+
+    @Override
+    public CoursePublish publishCourseInfo(String id) {
+//调用mapper
+        CoursePublish publishCourseInfo = baseMapper.getPublishCourseInfo(id);
+        return publishCourseInfo;    }
+
+    @Override
+    public void removeCourse(String courseId) {
+        //1 根据课程id删除小节
+        eduVideoService.removeVideoByCourseId(courseId);
+
+        //2 根据课程id删除章节
+        eduChapterService.removeChapterByCourseId(courseId);
+
+        //3 根据课程id删除描述
+        eduCourseDescriptionService.removeById(courseId);
+
+        //4 根据课程id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        if(result == 0) { //失败返回
+            throw new MyException(20001,"删除失败");
+        }
+    }
+
+    @Override
+    public CourseWeb getBaseCourseInfo(String courseId) {
+        return baseMapper.getBaseCourseInfo(courseId);
+    }
 }

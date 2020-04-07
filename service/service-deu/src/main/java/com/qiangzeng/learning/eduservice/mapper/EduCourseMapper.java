@@ -2,6 +2,8 @@ package com.qiangzeng.learning.eduservice.mapper;
 
 import com.qiangzeng.learning.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qiangzeng.learning.eduservice.entity.frontvo.CourseWeb;
+import com.qiangzeng.learning.eduservice.entity.vo.CoursePublish;
 
 /**
  * <p>
@@ -12,5 +14,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-04-06
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
+
+     CoursePublish getPublishCourseInfo(String courseId);
+
+    CourseWeb getBaseCourseInfo(String courseId);
+
+
 
 }
