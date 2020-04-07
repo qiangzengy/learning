@@ -22,8 +22,8 @@ public class EduCourseDescriptionController {
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
 
-    @ApiModelProperty(value = "添加课程信息")
-    @RequestMapping(value = "createCourse/{id}",method = RequestMethod.GET)
+    @ApiModelProperty(value = "获取课程描述信息")
+    @RequestMapping(value = "getById/{id}",method = RequestMethod.GET)
     public ResponseResult getById(@PathVariable String id){
 
         EduCourseDescription eduCourseDescription= eduCourseDescriptionService.getById(id);
