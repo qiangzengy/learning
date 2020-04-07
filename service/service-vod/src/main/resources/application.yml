@@ -1,0 +1,21 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: service-vod
+  profiles:
+    active: dev
+  #配置上传文件大小
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+#keyid和keysecret
+aliyun:
+  vod:
+   file:
+     keyid: #######
+     keysecret: #########
+
+
+

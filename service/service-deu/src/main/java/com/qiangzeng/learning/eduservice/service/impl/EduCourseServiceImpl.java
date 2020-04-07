@@ -83,6 +83,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         CourseInfo courseInfo = new CourseInfo();
         BeanUtils.copyProperties(eduCourse,courseInfo);
 
+
         //2 查询描述表
         EduCourseDescription courseDescription = eduCourseDescriptionService.getById(courseId);
         courseInfo.setDescription(courseDescription.getDescription());
