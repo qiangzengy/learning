@@ -3,12 +3,10 @@ package com.qiangzeng.learning.eduservice.controller.front;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qiangzeng.learning.common.util.ResponseResult;
 import com.qiangzeng.learning.eduservice.entity.EduCourse;
-import com.qiangzeng.learning.eduservice.entity.course.ChapteData;
 import com.qiangzeng.learning.eduservice.entity.frontvo.CourseFront;
 import com.qiangzeng.learning.eduservice.entity.frontvo.CourseWeb;
 import com.qiangzeng.learning.eduservice.service.EduChapterService;
 import com.qiangzeng.learning.eduservice.service.EduCourseService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +31,11 @@ public class CourseFrontController {
     //1 条件查询带分页查询课程
     @PostMapping("getFrontCourseList/{page}/{limit}")
     public ResponseResult getFrontCourseList(@PathVariable long page, @PathVariable long limit,
-                                             @RequestBody(required = false) CourseFront courseFrontVo) {
+                                             @RequestBody(required = false) CourseFront courseFront) {
         Page<EduCourse> pageCourse = new Page<>(page,limit);
-        //Map<String,Object> map = courseService.getCourseFrontList(pageCourse,courseFrontVo);
+        Map<String,Object> map = courseService.getCourseFrontList(pageCourse,courseFront);
         //返回分页所有数据
-        return ResponseResult.success();
+        return ResponseResult.success(map);
     }
 
     //2 课程详情的方法
@@ -61,6 +59,9 @@ public class CourseFrontController {
 //        BeanUtils.copyProperties(courseInfo,courseWebVoOrder);
 //        return courseWebVoOrder;
 //    }
+
+
+
 }
 
 

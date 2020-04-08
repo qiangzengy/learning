@@ -1,7 +1,6 @@
 package com.qiangzeng.learning.eduservice.controller.front;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qiangzeng.learning.common.util.ResponseResult;
 import com.qiangzeng.learning.eduservice.entity.EduCourse;
@@ -30,9 +29,9 @@ public class TeacherFrontController {
     @PostMapping("getTeacherFrontList/{page}/{limit}")
     public ResponseResult getTeacherFrontList(@PathVariable long page, @PathVariable long limit) {
         Page<EduTeacher> pageTeacher = new Page<>(page,limit);
-        //Map<String,Object> map = teacherService.getTeacherFrontList(pageTeacher);
+        Map<String,Object> map = teacherService.getTeacherFrontList(pageTeacher);
         //返回分页所有数据
-        return ResponseResult.success();
+        return ResponseResult.success(map);
     }
 
     //2 讲师详情的功能
@@ -41,14 +40,14 @@ public class TeacherFrontController {
         //1 根据讲师id查询讲师基本信息
         EduTeacher eduTeacher = teacherService.getById(teacherId);
         //2 根据讲师id查询所讲课程
-        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
-        wrapper.eq("teacher_id",teacherId);
-        List<EduCourse> courseList = courseService.list(wrapper);
+        List<EduCourse> courseList = courseService.getByTeacherId(teacherId);;
         Map<String,Object>map=new HashMap<>();
         map.put("teacher",eduTeacher);
         map.put("courseList",courseList);
         return ResponseResult.success(map);
     }
+
+
 }
 
 

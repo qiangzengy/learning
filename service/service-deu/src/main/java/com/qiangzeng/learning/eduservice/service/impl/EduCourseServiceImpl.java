@@ -1,9 +1,12 @@
 package com.qiangzeng.learning.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qiangzeng.learning.base.exceptionhandler.MyException;
 import com.qiangzeng.learning.eduservice.entity.EduCourse;
 import com.qiangzeng.learning.eduservice.entity.EduCourseDescription;
 import com.qiangzeng.learning.eduservice.entity.EduVideo;
+import com.qiangzeng.learning.eduservice.entity.frontvo.CourseFront;
 import com.qiangzeng.learning.eduservice.entity.frontvo.CourseWeb;
 import com.qiangzeng.learning.eduservice.entity.vo.CourseInfo;
 import com.qiangzeng.learning.eduservice.entity.vo.CoursePublish;
@@ -13,9 +16,15 @@ import com.qiangzeng.learning.eduservice.service.EduCourseDescriptionService;
 import com.qiangzeng.learning.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qiangzeng.learning.eduservice.service.EduVideoService;
+import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -117,5 +126,79 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Override
     public CourseWeb getBaseCourseInfo(String courseId) {
         return baseMapper.getBaseCourseInfo(courseId);
+    }
+
+
+    @Override
+    public List<EduCourse> getByTeacherId(String tedcherId) {
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.eq("teacher_id",tedcherId);
+        List<EduCourse>eduCourseList=baseMapper.selectList(queryWrapper);
+        return eduCourseList;
+    }
+
+
+    @Override
+    public Map<String, Object> getCourseFrontList(Page page, CourseFront courseFront) {
+
+        String teacherId=courseFront.getTeacherId();
+
+        String subjectParentId=courseFront.getSubjectParentId();
+
+        String subjectId=courseFront.getSubjectId();
+
+        //销量排序
+        String buyCountSort=courseFront.getBuyCountSort();
+
+        //最新时间排序
+        String gmtCreateSort=courseFront.getGmtCreateSort();
+
+        //价格排序
+        String priceSort=courseFront.getPriceSort();
+        QueryWrapper queryWrapper=new QueryWrapper();
+
+        if(!StringUtils.isEmpty(teacherId)){
+            queryWrapper.eq("teacher_id",teacherId);
+        }
+        if(!StringUtils.isEmpty(subjectParentId)) { //一级分类
+            queryWrapper.eq("subject_parent_id",subjectParentId);
+        }
+        if(!StringUtils.isEmpty(subjectId)) { //二级分类
+            queryWrapper.eq("subject_id",subjectId);
+        }
+        if(!StringUtils.isEmpty(buyCountSort)) { //关注度
+            queryWrapper.orderByDesc("buy_count");
+        }
+        if (!StringUtils.isEmpty(gmtCreateSort)) { //最新
+            queryWrapper.orderByDesc("gmt_create");
+        }
+
+        if (!StringUtils.isEmpty(priceSort)) {//价格
+            queryWrapper.orderByDesc("price");
+        }
+
+            baseMapper.selectPage(page,queryWrapper);
+
+        List<EduCourse> records = page.getRecords();
+        long current = page.getCurrent();
+        long pages = page.getPages();
+        long size = page.getSize();
+        long total = page.getTotal();
+        boolean hasNext = page.hasNext();//下一页
+        boolean hasPrevious = page.hasPrevious();//上一页
+
+        //把分页数据获取出来，放到map集合
+        Map<String, Object> map = new HashMap<>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+        //map返回
+        return map;
+
     }
 }

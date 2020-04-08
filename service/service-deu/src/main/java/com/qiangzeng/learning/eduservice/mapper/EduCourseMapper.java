@@ -17,7 +17,7 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
      CoursePublish getPublishCourseInfo(String courseId);
 
-    CourseWeb getBaseCourseInfo(String courseId);
+     CourseWeb getBaseCourseInfo(String courseId);
 
 
 
