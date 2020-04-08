@@ -80,7 +80,7 @@ public class VideoController {
             //调用方法得到凭证
             GetVideoPlayAuthResponse response = client.getAcsResponse(request);
             String playAuth = response.getPlayAuth();
-            return ResponseResult.success();
+            return ResponseResult.success(playAuth);
         }catch(Exception e) {
             throw new MyException(20001,"获取凭证失败");
         }

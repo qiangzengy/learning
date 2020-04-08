@@ -1,4 +1,4 @@
-package com.qiangzeng.learning.base;
+package com.qiangzeng.learning.base.config;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;

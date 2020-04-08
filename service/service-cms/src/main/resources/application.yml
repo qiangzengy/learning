@@ -1,0 +1,47 @@
+#端口
+server:
+  port: 7003
+spring:
+  application:
+#服务名
+   name: service-cms
+#环境设置 dev、test、online
+  rofiles:
+   active: dev
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://##:3306/learning?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    # nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: 47.104.239.106
+    port: 6379
+    database: 0
+    timeout: 180000
+    lettuce:
+      pool:
+        max-active: 20
+        #最大等待时间（负数表示没有限制）
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+#mybatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #读取xml文件信息
+  mapper-locations: classpath:com/qiangzeng/learning/cmsservice/mapper/xml/*.xml
+
+
+
+
+

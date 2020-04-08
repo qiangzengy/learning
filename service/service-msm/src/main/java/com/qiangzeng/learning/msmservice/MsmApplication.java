@@ -1,4 +1,4 @@
-package com.qiangzeng.learning.servicevod;
+package com.qiangzeng.learning.msmservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ComponentScan(basePackages = {"com.qiangzeng.learning"})
-@EnableDiscoveryClient
-public class VodApplication {
+public class MsmApplication {
 
-    public static void main(String[] args) { SpringApplication.run(VodApplication.class,args); }
+    public static void main(String[] args) { SpringApplication.run(MsmApplication.class,args); }
 }

@@ -1,6 +1,7 @@
 package com.qiangzeng.learning.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.qiangzeng.learning.eduservice.client.VideoClient;
 import com.qiangzeng.learning.eduservice.entity.EduVideo;
 import com.qiangzeng.learning.eduservice.mapper.EduVideoMapper;
 import com.qiangzeng.learning.eduservice.service.EduVideoService;
@@ -24,9 +25,13 @@ import java.util.List;
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
 
 
+    @Autowired
+    private VideoClient videoClient;
+
     //1 根据课程id删除小节
     @Override
     public void removeVideoByCourseId(String courseId) {
+
         //1 根据课程id查询课程所有的视频id
         QueryWrapper<EduVideo> wrapperVideo = new QueryWrapper<>();
         wrapperVideo.eq("course_id",courseId);
@@ -47,8 +52,7 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         //根据多个视频id删除多个视频
         if(videoIds.size()>0) {
             //TODO 需要完善，后面实现
-
-
+            videoClient.deleteBatch(videoIds);
         }
 
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();

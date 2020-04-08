@@ -1,0 +1,34 @@
+#端口
+server:
+  port: 7005
+spring:
+  application:
+#服务名
+   name: service-uce
+#环境设置 dev、test、online
+  rofiles:
+   active: dev
+#数据库配置
+  datasource:
+   driver-class-name: com.mysql.cj.jdbc.Driver
+   url: jdbc:mysql://localhost:3306/learning?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
+   username: root
+   password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    # nacos配置
+  cloud:
+    nacos:
+       discovery:
+          server-addr: 127.0.0.1:8848
+#mybatis日志
+mybatis-plus:
+  configuration:
+   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#读取xml文件信息
+  mapper-locations: classpath:com/qiangzeng/learning/ucservice/mapper/xml/*.xml
+#熔断器的配置(开启熔断机制）
+feign:
+  hystrix:
+    enabled: true

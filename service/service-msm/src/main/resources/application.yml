@@ -1,0 +1,42 @@
+#端口
+server:
+  port: 7004
+spring:
+  application:
+#服务名
+   name: service-msm
+#环境设置 dev、test、online
+  rofiles:
+   active: dev
+    # nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: 47.104.239.106
+    port: 6379
+    database: 0
+    timeout: 180000
+    lettuce:
+      pool:
+        max-active: 20
+        #最大等待时间（负数表示没有限制）
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+#mybatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#keyid和keysecret
+aliyun:
+  vod:
+    file:
+      keyid: ###
+      keysecret: ###
+
+
+
+
+
