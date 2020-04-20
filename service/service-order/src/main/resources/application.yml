@@ -27,7 +27,7 @@ mybatis-plus:
   configuration:
    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #读取xml文件信息
-  mapper-locations: classpath:com/qiangzeng/learning/ucservice/mapper/xml/*.xml
+  mapper-locations: classpath:com/qiangzeng/learning/order/mapper/xml/*.xml
 #熔断器的配置(开启熔断机制）
 feign:
   hystrix:
